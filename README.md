@@ -115,6 +115,8 @@ align <卡目录>
 
 完整版按[任务触发条件](template/.ai/spec/index.md#开发前按任务类型必读)读取相关规范章节，并说明用途；必要上下文不受三份规范的数量限制。卡 README 保留[当前恢复摘要](template/.ai/cards/README.md#当前恢复摘要)，历史通过阶段记录与[日志索引](template/.ai/journal/README.md#轻量索引与检索)追溯。日志同月续卷，经验记录待处理 / 已沉淀 / 无需沉淀及去向。文档保留语义与主来源，使用现有工具人工核对路径、章节、镜像及行为证据。
 
+完整版随附[最小实现与修复原则](template/.ai/workflow/implementation-principles.md)，供完整流程与轻量维护共用：先核对必要性、复用和已有能力；修 bug 前核查调用链与相关入口；有意简化时写清当前依据、已知上限和重新评估条件。通用规则可直接引用，项目约定仍须填写；已实施的持续限制写回 `spec/legacy.md`，保留历史依据。
+
 ## 结卡后的轻量维护
 
 已完成的卡保留决议、验收和验证证据。后续局部修复可以引用原卡，另建关联的维护记录；原卡未结项且属于原范围的缺陷，继续原卡回流。
@@ -154,7 +156,7 @@ AI 先核实轻量条件。用户已明确要求修复且条件满足时，记�
 
 - [Trellis](https://github.com/mindfold-ai/Trellis)：流程与知识分层、证据工作、需求收敛、阶段批准和经验回写。
 - [mattpocock/skills](https://github.com/mattpocock/skills)：`grilling` 的设计树轮询、`to-questionnaire` 的问卷组织、`wayfinder` 的依赖与范围区分，以及规格整理、测试和领域建模方法。
-- [ponytail](https://github.com/DietrichGebert/ponytail)：最小实现阶梯，帮助约束实现复杂度。
+- [ponytail](https://github.com/DietrichGebert/ponytail)：最小实现阶梯、修复前的调用链核查，以及简化方案的限制与重新评估条件。
 
 本基线结合 BA、Dev、QA 的协作方式采用这些结构与原则，运行时只依赖仓库中的 Markdown，不依赖上述项目的脚本、hook 或任务系统。
 

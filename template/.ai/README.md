@@ -23,6 +23,10 @@
 
 卡 README 用 `workflow: maintenance` 区分；缺省仍是完整流程 `full`。未结项完整卡的原范围缺陷沿原卡回流，已归档卡的新问题建立关联记录。涉及业务规则、权限、数据迁移、共享契约、并发等变化时升级，已授权动作无需重复确认，未授权的提交 / 推送不自动执行。
 
+## 最小实现与修复
+
+完整流程与轻量维护共用 [最小实现与修复原则](workflow/implementation-principles.md)：先核实必要性和现有能力，再写最小且清晰的实现；修 bug 前查调用链与相关入口；有意简化时记录当前足够的依据、已知上限和重新评估条件。核查与取舍写进现有计划 / 维护记录，已实施的持续限制写回 `spec/legacy.md`。通用正文随基线提供，项目约定与适配仍在 `spec/conventions.md`。
+
 ## 项目文档怎么保持有效
 
 按 [项目文档维护](workflow/documentation.md) 区分现行事实、工程约定、本卡目标与历史。读取时遇到事实冲突，或本卡影响长期文档时，先读该说明。完整流程在 04 列文档影响，05 随实现更新并评审，06 核对验证范围，07 提炼与归档；轻量维护将相同责任集中记入 `maintenance.md`，不额外生成 04/05。关键事实注明来源与核实范围；计划获批、代码已实现、已部署、环境已验证分别记录。
@@ -85,6 +89,6 @@
 
 - [mindfold-ai/Trellis](https://github.com/mindfold-ai/Trellis)：workflow / spec / tasks / workspace 的分层，"建任务同意 ≠ 实现同意"的门禁，before-dev 的改动边界声明，check 的范围纪律，break-loop 的根因分类，update-spec 的契约变化与知识回写时机。
 - [mattpocock/skills](https://github.com/mattpocock/skills)：`grilling` 的设计树轮询、`to-questionnaire` 的问卷格式、`wayfinder` 对待展开问题 / 待细化领域 / 范围外的区分、`to-spec` / `to-tickets` 的规格与切片、`tdd` 与 `diagnosing-bugs` 的反馈回路、`triage` 与 `.out-of-scope/` 的否决记忆、`domain-modeling` 的术语表与极简 ADR、`writing-for-agents` 的入口文件写法、`pr` 的证据分级、`improve-codebase-architecture` 的摩擦驱动结构复核（热点、deletion test、一次一个模块、行为不变证明）。
-- [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail)（MIT）：最小实现阶梯（写码前逐级停下），只摘编文本、注明出处；只裁实现，不裁测试与契约。
+- [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail)（MIT）：最小实现阶梯、修复前调用链核查、简化方案的上限与重新评估条件；文本原则按本基线改写，来源修订见 [通用正文](workflow/implementation-principles.md#参考来源)，保留测试、契约与授权边界。
 
 本基线只借结构与原则，不依赖这些来源的脚本、hook 或运行时；全部为纯 Markdown。
