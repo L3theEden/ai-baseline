@@ -1,10 +1,19 @@
 # 卡片开发流程总览
 
-一张卡从 BA 开出到 QA 关闭，经过七个阶段。卡是 BA 拆好的交付单元，开发的目标就是完成这张卡的验收标准（AC），不多做也不少做。每个阶段有固定的输入、产物和门禁；卡片产物落在 `.ai/cards/<卡目录>/`，可复用的项目知识按文档维护规则写回，聊天记录只是过程。
+完整版包含完整七阶段和轻量维护两条路径。完整流程处理需求分析、设计和交付；轻量维护处理预期明确、影响可界定的低风险修复。两者的记录都在 `.ai/cards/<卡目录>/`，可复用知识按文档维护规则写回。
+
+## 路径选择
+
+- 卡 README 的 `workflow: full` 表示完整流程，缺少该字段的旧卡也按 `full` 处理；`workflow: maintenance` 才使用轻量路径。未知取值先修正，不猜测分流。`stage` 仍是进度的唯一来源。
+- 新需求、业务规则变化、高风险或关键未知项走完整流程；符合全部条件的维护通过 [maintain](maintenance.md) 启动，用户可明确说“按轻量维护修复……”。具体适用与升级条件以该手册为准，不按代码行数判断。
+- 未结项完整卡的原范围缺陷沿原卡回流；已归档卡的新问题建关联记录，不修改原批准。完整流程中已有的“轻量卡”仍走完整阶段，不通过改 `workflow` 降级。
+- 轻量状态：`intake → in-dev → done`，条件核实与本次实现授权在案才可进入 `in-dev`；必要验证、评审和交付完成才可 `done`。同一窗口内按维护记录连续处理，升级时保留已有成果并切入缺失的完整阶段。
+
+以下阶段表与七阶段状态机适用于 `full`。
 
 ## 会话与阶段边界
 
-默认每个阶段在一个新的会话窗口里运行，窗口可以换 AI 工具、换模型。02 澄清与 03 对齐可在同一窗口分轮完成；用户启动 `align` 后，两者属于可自动往返的需求问答循环。开场与收尾按 `session-protocol.md`：
+完整流程默认每个阶段在一个新的会话窗口里运行，窗口可以换 AI 工具、换模型。02 澄清与 03 对齐可在同一窗口分轮完成；用户启动 `align` 后，两者属于可自动往返的需求问答循环。开场与收尾按 `session-protocol.md`：
 
 - 开场先读卡目录 `README.md` 的 `stage`，只做与之匹配的阶段。
 - 收尾写产物、改 `stage`、记 journal，打印"下一步"（下一个窗口在哪里启动、输入什么命令、建议什么模型），然后结束。
@@ -17,7 +26,7 @@
 |---|---|---|---|---|---|---|---|
 | 01 | 读卡 | `card-intake` | 任意 | 用户粘贴的卡内容 + 卡号 | `README.md`、`01-card.md` | 卡里的说法已核实；缺上下文已按协议处理 | `01-card-intake.md` |
 | 02 | 拆问题 | `clarify` | 任意 | `01-card.md` + spec / legacy / 上下游 + 已有问答 | `02-questions.md`（交互记录、本轮 BA 问卷、价值质疑） | 默认先与 Dev 交互并逐轮复核，本轮问卷经 Dev 审阅后带去与 BA 对齐 | `02-clarify.md` |
-| 03 | 对齐 | `align` | 任意 | BA 的答复 | `03-alignment.md`（验收标准、范围、决议） | 用户在独立一条消息里批准，`stage: planning` | `03-align.md` |
+| 03 | 对齐 | `align` | 任意 | 答复或覆盖关键决定的已有明确来源 | `03-alignment.md`（验收标准、范围、决议） | 用户在独立一条消息里批准，`stage: planning` | `03-align.md` |
 | 04 | 制定开发计划 | `dev-plan` | 顶级 | 已批准的 `03-alignment.md` | `04-dev-plan.md`（含文档影响清单）、`tasks/T<nn>-<slug>.md` | 设计确认、拆解确认两道批准，`stage: ready-for-dev` | `04-dev-plan.md` |
 | 05 | 开发 | `develop`（协调与评审）、`execute-subtask`（执行）、`card-review`（卡级代码评审） | 协调评审用顶级；执行可用低端 | 已批准的开发计划与子任务单 | 代码、测试、项目文档回写、子任务记录、`05-dev-log.md`、`05-card-review.md` | 子任务与集成评审通过、门禁绿、文档回写核对、卡级代码评审通过后才推送，`stage: desk-check` | `05-develop.md`、`05-execute-subtask.md`、`05-card-review.md` |
 | 06 | DC | `desk-check` | 任意 | `03`、`04`、`05` 的产物与测试输出 | `06-desk-check.md` | DC 会议通过，`stage: in-qa` | `06-desk-check.md` |
@@ -36,7 +45,7 @@ intake → clarifying → aligning → planning → ready-for-dev → in-dev →
 ```
 
 - `clarifying`：正在交互澄清、审阅问卷草稿，或需展开下一轮问题、待细化领域及其前置。
-- `aligning`：本轮问卷已审阅并等待答复，或已收到答复正在整理对齐文档；仍可存在未答问题。
+- `aligning`：本轮问卷已审阅并等待答复，或正依据答复 / 已有明确来源整理对齐文档；仍可存在未答问题。
 - `planning`：对齐已收敛并批准，等待或正在制定开发计划。
 - `ready-for-dev`：开发计划已通过拆解确认，可以开始 05。
 
@@ -46,7 +55,7 @@ intake → clarifying → aligning → planning → ready-for-dev → in-dev →
 - 已批准对齐后发现影响原结论的关键新问题：按需回到 `clarifying` 或 `aligning`，标明原批准不覆盖的变更，重新收敛并批准后再向下游推进。
 - 开发中发现设计要改（新表或字段、新接口、新依赖、新配置、范围变大）：`in-dev` 回到 `planning`，改计划并重新确认。
 - DC 未通过或 QA 发现本卡 AC 范围内的缺陷：回到 `in-dev`；是设计问题回到 `planning`；AC 本身有问题回到 `aligning`。
-- 超出本卡 AC 的缺陷：新开 fix 卡，`links` 引用原卡，原卡不因它阻塞。
+- 超出本卡 AC 的缺陷：另建关联的修复记录，按 [维护条件](maintenance.md#可以走轻量的条件) 分流；原卡不因范围外缺陷自动阻塞，范围内问题仍须完成验收。
 
 - **分期卡**（A/B/C 或一期/二期，01 已固定分期词表）：`stage` 表示**当前期**的位置。新一期开始时，上一期的 03/04/05 等产物加期号后缀留档（如 `03-alignment-A-20261014.md`）或移入 `research/history/`，当前文件写本期内容，README 写明当前期；本期对齐批准后进入 `planning`。门禁按期独立：上一期未 DC、未 QA 不阻塞下一期制定计划；已答问题按词表引用，不重问。
 
@@ -62,18 +71,18 @@ intake → clarifying → aligning → planning → ready-for-dev → in-dev →
   - 执行者（05 执行，可用低端模型，子代理或新窗口都可以）：只依据子任务单工作。
   - 评审者（05 协调窗口内，用顶级模型）：重跑验证，按契约、AC、spec 审查执行结果。
 
-## 四条不可让步的规则
+## 完整流程的四条不可让步规则
 
 1. **批准只放行下一个阶段。** 建卡目录、对齐批准都不是开发许可；只有 `04-dev-plan.md` 的拆解确认记录在案，才能写业务代码和迁移脚本。
 2. **默认一个窗口只做一个阶段。** `align` 可在本卡 02–03 之间自动追问与回填；其余阶段仍需用户显式命令。进度逐轮落档，换窗口只靠卡目录文件交接。
 3. **能查到的不要问。** 代码、配置、测试、git 历史、`.ai/` 文档能回答的，AI 自己查并写明证据；只把产品意图、范围边界、技术与风险取舍留给人。
 4. **每个阶段的结论都写进文件。** 执行者看不到聊天记录；没写进卡目录的结论等于没发生。
 
-## 一张卡的文件集
+## 完整卡的文件集
 
 ```
 .ai/cards/feat-DEMO-123-task-status-filter/
-├── README.md          # frontmatter：id / type / title / stage / primary_repo / linked_repo / created / links
+├── README.md          # frontmatter：id / type / title / workflow / stage / primary_repo / linked_repo / created / links
 ├── 01-card.md         # 规范化后的卡 + 核实结果 + 影响面初判
 ├── 02-questions.md    # 给 BA 的问卷 + 价值质疑
 ├── 03-alignment.md    # 最终验收标准、范围内外、决议、批准记录
@@ -88,3 +97,5 @@ intake → clarifying → aligning → planning → ready-for-dev → in-dev →
 ```
 
 跨仓库的卡：文档放主改动仓库（改动多的一方）；另一仓库同名目录只有一个 `README.md`，写明主仓库路径与本仓库改动摘要。另一仓库的子任务单仍放在主仓库卡目录，工作目录写另一仓库。
+
+轻量维护只建立卡 README 与 `maintenance.md`，必要证据按需放入卡目录，格式见 [维护记录模板](../templates/maintenance.md)；不预建完整流程的空文件。
