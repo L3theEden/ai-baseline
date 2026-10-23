@@ -10,7 +10,7 @@
 1. `.ai/README.md`：目录索引、按阶段的阅读顺序、维护规则
 2. `.ai/workflow/overview.md`：七阶段流程、需求问答循环与卡状态机
 3. `.ai/workflow/session-protocol.md`：每个窗口的开场与收尾动作
-4. `.ai/spec/index.md`：按任务类型的"开发前必读"与"质量检查"
+4. `.ai/spec/index.md`：触发条件、真实文件 / 章节与读取目的，以及提交前质量检查
 
 ## 阶段命令 → 流程文档
 

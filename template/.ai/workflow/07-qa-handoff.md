@@ -22,12 +22,12 @@ QA 依据 `03-alignment.md` 的 AC 与 `06-desk-check.md` 的演示脚本测试�
    - 新的"改 X 前要想到 Y" → `spec/guides.md`
    结论是"没有要写的"也可以，但要走一遍判断并在 journal 里写明。`05-dev-log.md` 的偏差段记录了计划与实际的差异，是最重要的回写来源。
 2. **bug 卡加做根因分析。** 根因五类：缺规范 / 跨层契约不清 / 改一处漏一处 / 测试盲区 / 隐含假设。写明预防机制（文档、类型、测试、检查清单）并落实到对应文件。
-3. **写 journal。** 按 `journal/README.md` 追加本卡条目（模板 `templates/journal-entry.md`）。
-4. **归档。** `stage: done`，卡目录移到 `.ai/cards/archive/YYYY-MM/`，链接仓库的同名目录一并移动。
+3. **写 journal。** 按 `journal/README.md` 追加本卡条目（模板 `templates/journal-entry.md`），逐项记录“已回写到”的状态与去向。必需回写须已完成；额外经验的待处理项写明缺口与后续安排，留给月度复查。
+4. **归档。** `stage: done`，更新当前恢复摘要；卡目录移到 `.ai/cards/archive/YYYY-MM/`，链接仓库的同名目录一并移动，并按 `cards/README.md` 修正受影响的引用。
 5. **提交。** 文档改动与代码分开提交，信息带卡号。
 
 ## 完成标准
 
 - QA 结果已回填，`stage: done`，目录已归档。
-- spec / decisions / journal 的回写已完成或已明确"无需回写"。
+- 本卡必需的 spec / context / decisions 回写已完成或已明确无需回写；额外经验的去向在 journal 中逐项记录。
 - 04 文档清单与 QA 修复影响已核对，现行说明、历史指针和验证范围一致；部署状态以证据为准，不因结卡自动标为已部署。

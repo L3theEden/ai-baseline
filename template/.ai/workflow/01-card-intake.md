@@ -9,7 +9,7 @@
 
 ## 步骤
 
-1. **建卡目录。** 路径 `.ai/cards/<feat|fix>-<卡号>-<slug>/`，slug 为 3–5 个英文单词的 kebab-case。写 `README.md`（frontmatter 见 `.ai/cards/README.md`），`stage: intake`。
+1. **建卡目录。** 路径 `.ai/cards/<feat|fix>-<卡号>-<slug>/`，slug 为 3–5 个英文单词的 kebab-case。写 `README.md`（frontmatter 与当前恢复摘要见 `.ai/cards/README.md`），`stage: intake`；未形成的产物照实标“未产出”。
 2. **规范化卡内容。** 按 `.ai/templates/card-analysis.md` 第一部分填写：背景、用户故事（feat）或复现步骤 + 期望 + 实际（fix）、附件、优先级、BA 给的验收标准原文。保留 BA 原话，标注哪些是 AI 的推断。
 3. **核实卡里的说法。** 这是本阶段最有价值的一步，借自 triage 的"先核实再提问"：
    - fix 卡：按复现步骤在代码里定位到具体类和方法，说明缺陷路径；能写出失败的测试或 curl 更好。找不到路径就写"未能定位，需要 BA 补充 X"。

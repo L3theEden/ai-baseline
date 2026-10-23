@@ -1,6 +1,6 @@
 # `.ai/` · <项目名> AI 开发基线
 
-这套目录让任意 AI 编码工具（读 `AGENTS.md` 的工具为主）按团队敏捷流程辅助开发：BA 开卡 → AI 与 Dev 交互澄清并质疑价值、整理本轮 BA 问卷 → Dev 与 BA 多轮对齐 → 顶级模型制定开发计划并拆成子任务 → 执行者（可用低端模型）逐个子任务实现、顶级模型评审 → 产出 DC 文档向 QA/BA 演示 → QA 依卡测试。每批答复后复核新问题、依赖、冲突和验收缺口并呈现依据；`align` 中发现新问题会直接按设计树继续追问，无需用户切换命令。明确要求直接出问卷时可跳过访谈。默认一个窗口只做一个阶段，02–03 的需求问答可在同一窗口连续完成；进度逐轮落档，换窗口靠卡目录文件交接。它同时承载项目全量信息、历史包袱与上下游上下文，让每次新会话都从真实背景开始，而不是从零猜。
+这套目录让任意 AI 编码工具（读 `AGENTS.md` 的工具为主）按团队敏捷流程辅助开发：BA 开卡 → AI 与 Dev 交互澄清并质疑价值、整理本轮 BA 问卷 → Dev 与 BA 多轮对齐 → 顶级模型制定开发计划并拆成子任务 → 执行者（可用低端模型）逐个子任务实现、顶级模型评审 → 产出 DC 文档向 QA/BA 演示 → QA 依卡测试。每批答复后复核新问题、依赖、冲突和验收缺口并呈现依据；`align` 中发现新问题会直接按设计树继续追问，无需用户切换命令。明确要求直接出问卷时可跳过访谈。默认一个窗口只做一个阶段，02–03 的需求问答可在同一窗口连续完成；进度逐轮落档，换窗口靠卡目录文件交接。它同时承载项目知识及其来源指针、历史包袱与上下游上下文，让每次新会话都从真实背景开始，而不是从零猜。
 
 <多仓库项目：每个仓库使用同一套目录约定，内容各自项目化。通用流程同步，项目适配分别登记；规范各写各的，共享契约指定主维护位置。单仓库项目删掉本段。>
 
@@ -15,11 +15,13 @@
 | `decisions/rejected/` | 被否决的需求 / 价值质疑结论，按概念一文件 | 对齐阶段 BA 否决某方向时写入；再遇同类需求先翻这里 |
 | `templates/` | 卡文档模板：问题清单、对齐、开发计划、子任务单、开发记录、卡级代码评审、DC、日志条目 | 模板不够用时改；按登记的适配同步 |
 | `cards/` | 每张卡一个目录，编号文件 `01`…`06` + `tasks/`；做完移入 `archive/YYYY-MM/` | 卡生命周期内持续更新 |
-| `journal/` | 按开发者分文件的会话日志；每月提炼进 `spec/` 或 `decisions/` | 每次会话结束追加 |
+| `journal/` | 按开发者分目录、按月分卷的会话日志；需要时建立轻量索引 | 每次会话结束追加；每月复查提炼去向 |
 
 ## 项目文档怎么保持有效
 
 按 [项目文档维护](workflow/documentation.md) 区分现行事实、工程约定、本卡目标与历史。读取时遇到事实冲突，或本卡影响长期文档时，先读该说明。04 列文档影响，05 随实现更新并评审，06 核对验证范围，07 提炼与归档。关键事实注明来源与核实范围；计划获批、代码已实现、已部署、环境已验证分别记录。
+
+规范按 [触发条件与阅读目的](spec/index.md#开发前按任务类型必读) 定位真实章节。长期正文保留语义、边界和来源；可查询清单用主来源指针。换会话先读卡片的 [当前恢复摘要](cards/README.md#当前恢复摘要)，历史按需检索；日志分卷与提炼状态见 [journal 规则](journal/README.md)。文档变更使用现有工具和 [人工检查项](workflow/documentation.md#文档检查) 核验。
 
 ## 基线来源与项目适配
 
@@ -49,12 +51,14 @@
 | 读卡 | `workflow/01-card-intake.md`、`spec/overview.md`、`spec/domain.md` | `decisions/rejected/`、`cards/archive/` 里的同主题卡 |
 | 拆问题 | `workflow/02-clarify.md`、`spec/legacy.md`、`context/upstream-downstream.md` | `spec/architecture.md` |
 | 对齐 | `workflow/03-align.md`、`workflow/02-clarify.md`（设计树追问与逐轮复核） | `decisions/adr/` |
-| 制定开发计划 | `workflow/04-dev-plan.md`、`spec/index.md`（按任务类型跳转）、`spec/conventions.md`、`context/api-contract.md` | `spec/guides.md`、`spec/integrations.md` |
+| 制定开发计划 | `workflow/04-dev-plan.md`、`spec/index.md` 指向的相关章节与通用约束 | 涉及契约 / 集成时读取 `context/api-contract.md` / `spec/integrations.md` 的相关章节 |
 | 开发（协调与评审） | `workflow/05-develop.md` | `spec/testing.md` |
-| 开发（执行子任务） | `workflow/05-execute-subtask.md`、子任务单及其"先读"列出的文件 | 无（只依据单子工作） |
+| 开发（执行子任务） | `workflow/05-execute-subtask.md`、子任务单及其“先读”列出的章节与契约 | 缺必要上下文时由协调者补单 |
 | 开发（卡级代码评审） | `workflow/05-card-review.md`、`spec/index.md`"质量检查"指向的规范 | `spec/guides.md` |
 | DC | `workflow/06-desk-check.md`、`spec/config-and-deploy.md` | `spec/testing.md` |
 | 交 QA / 结卡 | `workflow/07-qa-handoff.md`、`journal/README.md` | `spec/legacy.md`（是否要新增条目） |
+
+阶段手册必须读取；项目资料按触发条件定位相关章节，“选读”条件一旦命中即为本卡必读。不得因精简上下文省略通用约束、必要契约或批准记录。
 
 ## 按角色
 
