@@ -1,6 +1,6 @@
 # 07 · 交 QA 与结卡（QA Handoff）
 
-QA 依据 `03-alignment.md` 的 AC 与 `06-desk-check.md` 的演示脚本测试。本阶段处理 QA 反馈、关闭卡、把经验写回基线。
+QA 依据 `03-alignment.md` 的 AC 与 `06-desk-check.md` 的演示脚本测试。本阶段处理 QA 反馈、关闭卡、提炼经验。日常事实和契约变化已在开发阶段按 [项目文档维护](documentation.md) 回写，本阶段复核与收尾。
 
 ## QA 反馈处理
 
@@ -12,13 +12,13 @@ QA 依据 `03-alignment.md` 的 AC 与 `06-desk-check.md` 的演示脚本测试�
 
 ## 结卡清单（全部 AC 通过后）
 
-1. **写回 spec。** 问自己："这张卡教会了什么，未来的 AI 或同事不知道会再踩一次？"逐项判断并落笔：
+1. **复核回写并提炼。** 先核对 04 的文档清单及 QA 修复新增的影响，确认现行说明与最终实现、验证范围一致，遗漏立即补齐。再问自己："这张卡教会了什么，未来的 AI 或同事不知道会再踩一次？"逐项判断并落笔：
    - 新约定或新配方 → `spec/conventions.md`
    - 对齐文档"术语"一节里新定下的词 → `spec/domain.md` 的术语表
    - 新坑、临时方案、被迫的妥协 → `spec/legacy.md`（写现象 / 原因 / 影响 / 处理建议 / 证据 / 状态）
    - 难回头且有真实取舍的决定 → `decisions/adr/`（极简格式，见该目录 README）
    - 被否决的方向 → `decisions/rejected/`
-   - 契约变化 → `context/api-contract.md`；上下游行为变化 → `context/upstream-downstream.md`
+   - 契约与上下游的最终验证结果 → 补 `context/api-contract.md` / `context/upstream-downstream.md` 的证据与适用范围，复核主来源与镜像
    - 新的"改 X 前要想到 Y" → `spec/guides.md`
    结论是"没有要写的"也可以，但要走一遍判断并在 journal 里写明。`05-dev-log.md` 的偏差段记录了计划与实际的差异，是最重要的回写来源。
 2. **bug 卡加做根因分析。** 根因五类：缺规范 / 跨层契约不清 / 改一处漏一处 / 测试盲区 / 隐含假设。写明预防机制（文档、类型、测试、检查清单）并落实到对应文件。
@@ -30,3 +30,4 @@ QA 依据 `03-alignment.md` 的 AC 与 `06-desk-check.md` 的演示脚本测试�
 
 - QA 结果已回填，`stage: done`，目录已归档。
 - spec / decisions / journal 的回写已完成或已明确"无需回写"。
+- 04 文档清单与 QA 修复影响已核对，现行说明、历史指针和验证范围一致；部署状态以证据为准，不因结卡自动标为已部署。

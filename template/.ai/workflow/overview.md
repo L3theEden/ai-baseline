@@ -1,6 +1,6 @@
 # 卡片开发流程总览
 
-一张卡从 BA 开出到 QA 关闭，经过七个阶段。卡是 BA 拆好的交付单元，开发的目标就是完成这张卡的验收标准（AC），不多做也不少做。每个阶段有固定的输入、产物和门禁；产物全部落在 `.ai/cards/<卡目录>/` 里，聊天记录只是过程。
+一张卡从 BA 开出到 QA 关闭，经过七个阶段。卡是 BA 拆好的交付单元，开发的目标就是完成这张卡的验收标准（AC），不多做也不少做。每个阶段有固定的输入、产物和门禁；卡片产物落在 `.ai/cards/<卡目录>/`，可复用的项目知识按文档维护规则写回，聊天记录只是过程。
 
 ## 会话与阶段边界
 
@@ -18,16 +18,16 @@
 | 01 | 读卡 | `card-intake` | 任意 | 用户粘贴的卡内容 + 卡号 | `README.md`、`01-card.md` | 卡里的说法已核实；缺上下文已按协议处理 | `01-card-intake.md` |
 | 02 | 拆问题 | `clarify` | 任意 | `01-card.md` + spec / legacy / 上下游 + 已有问答 | `02-questions.md`（交互记录、本轮 BA 问卷、价值质疑） | 默认先与 Dev 交互并逐轮复核，本轮问卷经 Dev 审阅后带去与 BA 对齐 | `02-clarify.md` |
 | 03 | 对齐 | `align` | 任意 | BA 的答复 | `03-alignment.md`（验收标准、范围、决议） | 用户在独立一条消息里批准，`stage: planning` | `03-align.md` |
-| 04 | 制定开发计划 | `dev-plan` | 顶级 | 已批准的 `03-alignment.md` | `04-dev-plan.md`、`tasks/T<nn>-<slug>.md` | 设计确认、拆解确认两道批准，`stage: ready-for-dev` | `04-dev-plan.md` |
-| 05 | 开发 | `develop`（协调与评审）、`execute-subtask`（执行）、`card-review`（卡级代码评审） | 协调评审用顶级；执行可用低端 | 已批准的开发计划与子任务单 | 代码、测试、子任务单的执行与评审记录、`05-dev-log.md`、`05-card-review.md` | 全部子任务评审通过、集成评审通过、门禁绿、卡级代码评审通过后才推送，`stage: desk-check` | `05-develop.md`、`05-execute-subtask.md`、`05-card-review.md` |
+| 04 | 制定开发计划 | `dev-plan` | 顶级 | 已批准的 `03-alignment.md` | `04-dev-plan.md`（含文档影响清单）、`tasks/T<nn>-<slug>.md` | 设计确认、拆解确认两道批准，`stage: ready-for-dev` | `04-dev-plan.md` |
+| 05 | 开发 | `develop`（协调与评审）、`execute-subtask`（执行）、`card-review`（卡级代码评审） | 协调评审用顶级；执行可用低端 | 已批准的开发计划与子任务单 | 代码、测试、项目文档回写、子任务记录、`05-dev-log.md`、`05-card-review.md` | 子任务与集成评审通过、门禁绿、文档回写核对、卡级代码评审通过后才推送，`stage: desk-check` | `05-develop.md`、`05-execute-subtask.md`、`05-card-review.md` |
 | 06 | DC | `desk-check` | 任意 | `03`、`04`、`05` 的产物与测试输出 | `06-desk-check.md` | DC 会议通过，`stage: in-qa` | `06-desk-check.md` |
-| 07 | 交 QA / 结卡 | `qa-handoff` | 任意 | QA 结果 | `06-desk-check.md` 回填、journal、spec 回写 | 全部 AC 通过，`stage: done`，卡目录归档 | `07-qa-handoff.md` |
+| 07 | 交 QA / 结卡 | `qa-handoff` | 任意 | QA 结果 | `06-desk-check.md` 回填、journal、项目知识复核与经验提炼 | 全部 AC 通过，`stage: done`，卡目录归档 | `07-qa-handoff.md` |
 
 02 与 03 可以在同一个窗口完成：首次问卷发出、BA 答复回来后，用户输入 `align`。之后发现新问题或解锁待展开题时，AI 直接复用 02 的设计树规则追问；用户直接回答或补充 BA 答复即可继续，无需切回 `clarify` 或重复输入 `align`。换窗口时用 `align <卡目录>` 从文件续接。
 
 02 默认先与 Dev 澄清其能回答且有权决定的部分，再整理待 BA 决定的本轮问卷；明确要求直接出问卷时可跳过访谈。每批答复后都复核新问题、依赖、冲突和验收缺口，并呈现依赖展开、场景与冲突、验收覆盖和本轮判断的依据。需要 BA 决策时先交 Dev 审阅问卷，再由 Dev 转发；用户明确要求只回填或暂停时保留开放项并停止追问。产出文档不表示需求已经收敛；03 无待展开关键题且通过收敛门禁后，才呈现摘要请求批准。
 
-横切协议：开场、收尾、阶段中途换窗口走 `session-protocol.md`；缺上下文走 `missing-context.md`。
+横切协议：开场、收尾、阶段中途换窗口走 `session-protocol.md`；缺上下文走 `missing-context.md`；现行知识、历史、文档回写与冲突处理走 [项目文档维护](documentation.md)。首次登记来源或升级基线时走 [来源与升级](baseline-upgrade.md)，这类维护不自动改变卡阶段。
 
 ## 卡状态机
 
@@ -55,7 +55,7 @@ intake → clarifying → aligning → planning → ready-for-dev → in-dev →
 ## 角色
 
 - **BA**：开卡与拆卡、回答问卷、批准对齐文档、参加 DC。
-- **Dev**（与 AI 一起）：读卡、拆问题、对齐、确认开发计划、确认提交、写 DC、交 QA、结卡回写。技术取舍由 Dev 拍板。
+- **Dev**（与 AI 一起）：读卡、拆问题、对齐、确认开发计划、确认提交、随实现维护文档、写 DC、交 QA、结卡提炼。技术取舍由 Dev 拍板。
 - **QA**：依据 `03-alignment.md` 的验收标准和 `06-desk-check.md` 的演示脚本测试；缺陷回流。
 - **AI**，按窗口分三种角色：
   - 规划者（01 到 04，以及 05 的协调，用顶级模型）：事实自己查，决策交给人。
@@ -77,7 +77,7 @@ intake → clarifying → aligning → planning → ready-for-dev → in-dev →
 ├── 01-card.md         # 规范化后的卡 + 核实结果 + 影响面初判
 ├── 02-questions.md    # 给 BA 的问卷 + 价值质疑
 ├── 03-alignment.md    # 最终验收标准、范围内外、决议、批准记录
-├── 04-dev-plan.md     # 技术设计、契约、AC 追踪、测试设计、子任务图、单向门、两道批准记录
+├── 04-dev-plan.md     # 技术设计、契约、文档影响与回写、AC 追踪、测试设计、子任务图、两道批准记录
 ├── tasks/             # 子任务单，一个子任务一个文件：T01-<slug>.md …
 ├── 05-dev-log.md      # 子任务状态汇总、批次与 worktree、偏差、提交、集成评审、自测证据
 ├── 05-card-review.md  # 卡级代码评审：评审范围、Spec 轴与 Standards 轴报告、分流、推送确认

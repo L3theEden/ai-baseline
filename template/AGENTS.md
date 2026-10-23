@@ -29,6 +29,8 @@
 | `qa-handoff` | `.ai/workflow/07-qa-handoff.md` |
 | 缺上下文 / 不知道对端怎么做 | `.ai/workflow/missing-context.md` |
 | 换窗口 / 交接 / 上下文快满 | `.ai/workflow/session-protocol.md` |
+| 项目文档变化 / 文档与实现冲突 | `.ai/workflow/documentation.md` |
+| 首次登记来源 / 升级完整版基线 | `.ai/workflow/baseline-upgrade.md` |
 
 ## 硬规则（依据见 `.ai/spec/` 与 `.ai/decisions/`）
 
