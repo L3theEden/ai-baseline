@@ -1,6 +1,6 @@
 ---
 name: clarify
-description: 阶段 02 拆问题：把卡变成给 BA 的问卷，附价值质疑；可与 03 对齐同窗口。
+description: 阶段 02 澄清：与 Dev 沿设计树讨论，查证未知项，按需提炼给 BA 的业务问题。
 disable-model-invocation: true
 ---
 

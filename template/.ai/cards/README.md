@@ -16,7 +16,7 @@
 |---|---|---|
 | `README.md` | 01 建立，全程更新 `stage` | 见下 |
 | `01-card.md` | 01 读卡 | `templates/card-analysis.md` 第一部分 |
-| `02-questions.md` | 02 拆问题 | `templates/card-analysis.md` 第二、三部分 |
+| `02-questions.md` | 02 与 Dev 澄清 | `templates/card-analysis.md` 第二部分；价值疑点按需用第三部分 |
 | `03-alignment.md` | 03 对齐 | `templates/alignment.md` |
 | `04-dev-plan.md` | 04 制定开发计划 | `templates/dev-plan.md` |
 | `tasks/T<nn>-<slug>.md` | 04 拆解产出，05 执行与评审 | `templates/subtask.md` |
@@ -61,7 +61,7 @@ frontmatter 下保留下面四项，简短到新会话能直接定位下一步�
 
 **历史整理：** 每轮澄清、答复、批准、评审和偏差保留在 02/03/04/05 或 `maintenance.md` 等对应产物。旧 README 中的独有记录先移入对应阶段记录或 `research/history/` 并留指针，再收短入口，不能直接删掉依据。旧交接记录保留，更新时注明被哪份记录或阶段产物取代；同日另建递增序号文件，不覆盖原文。移动或归档后核对现行引用，详见 [文档检查](../workflow/documentation.md#文档检查)。
 
-完整流程的澄清与对齐可以多轮往返：交互进行中、草稿待 Dev 审阅或需展开下一轮时为 `clarifying`；本轮问卷已审阅并等待答复，或已收到答复正在整理对齐文档、等待批准时为 `aligning`。`align` 启动后在这两个状态间自动继续设计树追问与回填，无需用户切换命令。每轮记录并呈现依赖展开、场景与冲突、AC 覆盖及本轮判断的依据，Q 编号保留、新题递增，原答复与修订依据不覆盖。只有 03 的收敛门禁通过并获明确批准，才能进入 `planning`；具体命令与回流按 `workflow/overview.md`、`workflow/session-protocol.md`。
+完整流程的澄清与对齐可多轮往返：与 Dev 讨论、查证、审阅业务问题草稿或展开关键分支时为 `clarifying`；澄清已收敛、准备或正在整理共识，或等待已审阅的 BA 问题答复且当前无可继续的 Dev 讨论，或等待最终批准时为 `aligning`。无需先有 BA 问卷。`align` 内按设计树连续讨论与更新，每轮只记关键变化、依据与下一步；Q 编号、关键答复与实质修订保留。03 关键问题收敛并获最终批准后进入 `planning`，一般实现细节留给 04。具体命令与回流按 `workflow/overview.md`、`workflow/session-protocol.md`。
 
 ## 主仓库与链接仓库
 

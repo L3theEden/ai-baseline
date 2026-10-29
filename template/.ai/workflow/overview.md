@@ -25,16 +25,16 @@
 | # | 阶段 | 阶段命令 | 建议模型 | 输入 | 产物 | 门禁（过了才进下一阶段） | 手册 |
 |---|---|---|---|---|---|---|---|
 | 01 | 读卡 | `card-intake` | 任意 | 用户粘贴的卡内容 + 卡号 | `README.md`、`01-card.md` | 卡里的说法已核实；缺上下文已按协议处理 | `01-card-intake.md` |
-| 02 | 拆问题 | `clarify` | 任意 | `01-card.md` + spec / legacy / 上下游 + 已有问答 | `02-questions.md`（交互记录、本轮 BA 问卷、价值质疑） | 默认先与 Dev 交互并逐轮复核，本轮问卷经 Dev 审阅后带去与 BA 对齐 | `02-clarify.md` |
+| 02 | 澄清 | `clarify` | 任意 | `01-card.md` + 相关证据与已有讨论 | `02-questions.md`（Dev 共识、待查与待展开项、按需 BA 问题） | 当前分支已讨论，剩余问题分清查证与业务取舍；无需必经 BA 问卷 | `02-clarify.md` |
 | 03 | 对齐 | `align` | 任意 | 答复或覆盖关键决定的已有明确来源 | `03-alignment.md`（验收标准、范围、决议） | 用户在独立一条消息里批准，`stage: planning` | `03-align.md` |
 | 04 | 制定开发计划 | `dev-plan` | 顶级 | 已批准的 `03-alignment.md` | `04-dev-plan.md`（含文档影响清单）、`tasks/T<nn>-<slug>.md` | 设计确认、拆解确认两道批准，`stage: ready-for-dev` | `04-dev-plan.md` |
 | 05 | 开发 | `develop`（协调与评审）、`execute-subtask`（执行）、`card-review`（卡级代码评审） | 协调评审用顶级；执行可用低端 | 已批准的开发计划与子任务单 | 代码、测试、项目文档回写、子任务记录、`05-dev-log.md`、`05-card-review.md` | 子任务与集成评审通过、门禁绿、文档回写核对、卡级代码评审通过后才推送，`stage: desk-check` | `05-develop.md`、`05-execute-subtask.md`、`05-card-review.md` |
 | 06 | DC | `desk-check` | 任意 | `03`、`04`、`05` 的产物与测试输出 | `06-desk-check.md` | DC 会议通过，`stage: in-qa` | `06-desk-check.md` |
 | 07 | 交 QA / 结卡 | `qa-handoff` | 任意 | QA 结果 | `06-desk-check.md` 回填、journal、项目知识复核与经验提炼 | 全部 AC 通过，`stage: done`，卡目录归档 | `07-qa-handoff.md` |
 
-02 与 03 可以在同一个窗口完成：首次问卷发出、BA 答复回来后，用户输入 `align`。之后发现新问题或解锁待展开题时，AI 直接复用 02 的设计树规则追问；用户直接回答或补充 BA 答复即可继续，无需切回 `clarify` 或重复输入 `align`。换窗口时用 `align <卡目录>` 从文件续接。
+02 与 03 可以在同一个窗口完成：与 Dev 澄清后，用户输入 `align` 整理共识，不要求先有 BA 问卷或 BA 答复。之后发现新问题或解锁待展开分支时，直接复用 02 的设计树继续讨论；用户回答、补资料或提供 BA 答复即可继续。换窗口用 `align <卡目录>` 从文件续接。
 
-02 默认先与 Dev 澄清其能回答且有权决定的部分，再整理待 BA 决定的本轮问卷；明确要求直接出问卷时可跳过访谈。每批答复后都复核新问题、依赖、冲突和验收缺口，并呈现依赖展开、场景与冲突、验收覆盖和本轮判断的依据。需要 BA 决策时先交 Dev 审阅问卷，再由 Dev 转发；用户明确要求只回填或暂停时保留开放项并停止追问。产出文档不表示需求已经收敛；03 无待展开关键题且通过收敛门禁后，才呈现摘要请求批准。
+02 以 AI 与 Dev 的讨论为主：明确的原卡要求直接沿用；Dev 不确定时先查证、推演或补资料，业务歧义与规则取舍才提炼给 BA。问题前置不明时先处理前置，其他独立分支继续。每轮只记关键共识、变化依据与下一步，不填固定复核报告；BA 问题由 Dev 审阅后自行转发。用户要求直接出问卷、只回填或暂停时按其请求处理。03 在目标、范围、关键规则与 AC 收敛后呈现摘要并保留一次最终批准，不要求一般实现细节提前定稿。
 
 横切协议：开场、收尾、阶段中途换窗口走 `session-protocol.md`；缺上下文走 `missing-context.md`；现行知识、历史、文档回写与冲突处理走 [项目文档维护](documentation.md)。首次登记来源或升级基线时走 [来源与升级](baseline-upgrade.md)，这类维护不自动改变卡阶段。
 
@@ -44,14 +44,14 @@
 intake → clarifying → aligning → planning → ready-for-dev → in-dev → desk-check → in-qa → done
 ```
 
-- `clarifying`：正在交互澄清、审阅问卷草稿，或需展开下一轮问题、待细化领域及其前置。
-- `aligning`：本轮问卷已审阅并等待答复，或正依据答复 / 已有明确来源整理对齐文档；仍可存在未答问题。
+- `clarifying`：与 Dev 讨论、查证、审阅业务问题草稿或展开关键分支。
+- `aligning`：澄清已收敛、准备或正在整理结论；或等待已审阅的 BA 问题答复且当前无可继续的 Dev 讨论；或已收敛待最终批准。不以 BA 问卷为前提，README 写明实际下一步。
 - `planning`：对齐已收敛并批准，等待或正在制定开发计划。
 - `ready-for-dev`：开发计划已通过拆解确认，可以开始 05。
 
 回流：
 
-- 答复引出新问题或解锁待展开题：`aligning` 回到 `clarifying`；保留既有编号和答复，直接追问下一轮。澄清结束且问卷审阅完成后回到 `aligning`，本循环内无需用户切换命令；仅等旧题答复时保持 `aligning`。
+- 新信息解锁关键分支或需要查证：回到 `clarifying`，保留编号与依据并继续 Dev 讨论。准备整理共识或仅等已审阅的业务问题答复时回到 `aligning`；同一循环内无需切换命令，技术待查不作为 BA 待答项。
 - 已批准对齐后发现影响原结论的关键新问题：按需回到 `clarifying` 或 `aligning`，标明原批准不覆盖的变更，重新收敛并批准后再向下游推进。
 - 开发中发现设计要改（新表或字段、新接口、新依赖、新配置、范围变大）：`in-dev` 回到 `planning`，改计划并重新确认。
 - DC 未通过或 QA 发现本卡 AC 范围内的缺陷：回到 `in-dev`；是设计问题回到 `planning`；AC 本身有问题回到 `aligning`。
@@ -63,8 +63,8 @@ intake → clarifying → aligning → planning → ready-for-dev → in-dev →
 
 ## 角色
 
-- **BA**：开卡与拆卡、回答问卷、批准对齐文档、参加 DC。
-- **Dev**（与 AI 一起）：读卡、拆问题、对齐、确认开发计划、确认提交、随实现维护文档、写 DC、交 QA、结卡提炼。技术取舍由 Dev 拍板。
+- **BA**：开卡与拆卡，处理需要业务判断的歧义、冲突和规则取舍，按团队约定参与最终对齐确认与 DC。
+- **Dev**（与 AI 一起）：需求澄清的主要讨论者，查证与推演流程、决定技术取舍，提炼需要 BA 判断的问题；随后确认开发计划与提交、维护文档、准备 DC、交 QA 和结卡。
 - **QA**：依据 `03-alignment.md` 的验收标准和 `06-desk-check.md` 的演示脚本测试；缺陷回流。
 - **AI**，按窗口分三种角色：
   - 规划者（01 到 04，以及 05 的协调，用顶级模型）：事实自己查，决策交给人。
@@ -84,7 +84,7 @@ intake → clarifying → aligning → planning → ready-for-dev → in-dev →
 .ai/cards/feat-DEMO-123-task-status-filter/
 ├── README.md          # frontmatter：id / type / title / workflow / stage / primary_repo / linked_repo / created / links
 ├── 01-card.md         # 规范化后的卡 + 核实结果 + 影响面初判
-├── 02-questions.md    # 给 BA 的问卷 + 价值质疑
+├── 02-questions.md    # Dev 澄清记录、待查与待展开项、按需 BA 问题
 ├── 03-alignment.md    # 最终验收标准、范围内外、决议、批准记录
 ├── 04-dev-plan.md     # 技术设计、契约、文档影响与回写、AC 追踪、测试设计、子任务图、两道批准记录
 ├── tasks/             # 子任务单，一个子任务一个文件：T01-<slug>.md …

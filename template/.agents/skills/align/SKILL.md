@@ -1,6 +1,6 @@
 ---
 name: align
-description: 阶段 03 对齐：回填 BA 答复、收敛验收标准与范围、记录批准。
+description: 阶段 03 对齐：整理原卡、Dev 共识与按需 BA 答复，继续讨论并收敛范围和验收。
 disable-model-invocation: true
 ---
 

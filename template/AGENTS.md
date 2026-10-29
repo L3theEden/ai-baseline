@@ -19,7 +19,7 @@
 | `maintain`（问题描述或维护卡目录） | `.ai/workflow/maintenance.md` |
 | `card-intake`（附卡内容与卡号） | `.ai/workflow/01-card-intake.md` |
 | `clarify` | `.ai/workflow/02-clarify.md` |
-| `align`（附 BA 答复） | `.ai/workflow/03-align.md` |
+| `align`（可附 Dev 补充、资料或 BA 答复） | `.ai/workflow/03-align.md` |
 | `dev-plan` | `.ai/workflow/04-dev-plan.md` |
 | `develop`（协调与评审） | `.ai/workflow/05-develop.md` |
 | `execute-subtask <卡目录> <T编号>`（执行一个子任务） | `.ai/workflow/05-execute-subtask.md` |
@@ -34,7 +34,7 @@
 ## 通用硬规则（所有项目保留，依据见 `.ai/spec/` 与 `.ai/decisions/`）
 
 - 每张卡先在 `.ai/cards/<feat|fix>-<卡号>-<slug>/` 建目录再动代码；跨仓库的卡，文档放主改动仓库，另一仓库同名目录只放链接。
-- 能从代码、配置、测试、git 历史查到的事实自己查；只问用户产品意图、范围边界、风险取舍。
+- 能从代码、配置、测试、git 历史查到的事实自己查；与 Dev 沿设计树讨论需求和技术取舍，业务歧义或规则变更才提炼给 BA。原卡明确要求直接沿用，未知技术事实不自动转交 BA。
 - 先读卡的 `workflow`（缺省 `full`）与 `stage`。完整流程按阶段触发，`align` 可连续问答；`maintenance` 可同窗口完成授权内维护。已有完整卡不降级，换窗口靠文件交接。
 - 写业务代码前，完整流程须有 `04-dev-plan.md` 的拆解确认；轻量须有 `maintenance.md` 的适用依据与本次实现授权。建目录不等于授权；命中升级条件就转完整流程，不能伪造批准。
 - 推送须获授权并通过本次验证与评审：完整流程看 `05-card-review.md`，轻量看 `maintenance.md`。完整流程提前推送须用户确认并记原因；不把修复授权推定为提交或推送授权。

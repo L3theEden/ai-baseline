@@ -1,6 +1,6 @@
 # `.ai/` · <项目名> AI 开发基线
 
-这套目录让任意 AI 编码工具（读 `AGENTS.md` 的工具为主）按团队敏捷流程辅助开发：BA 开卡 → AI 与 Dev 交互澄清并质疑价值、整理本轮 BA 问卷 → Dev 与 BA 多轮对齐 → 顶级模型制定开发计划并拆成子任务 → 执行者（可用低端模型）逐个子任务实现、顶级模型评审 → 产出 DC 文档向 QA/BA 演示 → QA 依卡测试。每批答复后复核新问题、依赖、冲突和验收缺口并呈现依据；`align` 中发现新问题会直接按设计树继续追问，无需用户切换命令。明确要求直接出问卷时可跳过访谈。完整流程默认一个窗口只做一个阶段，02–03 的需求问答可在同一窗口连续完成；进度逐轮落档，换窗口靠卡目录文件交接。它同时承载项目知识及其来源指针、历史包袱与上下游上下文，让每次新会话都从真实背景开始，而不是从零猜。
+这套目录让 AI 与 Dev 从已有事实出发协作：读卡 → 沿设计树讨论需求与关键取舍 → 整理共识 → 制定开发计划 → 开发与评审 → DC → QA。需要业务判断时才提炼问题给 BA，明确的原卡要求与 Dev 职责内的技术决定直接记录。每轮简述变化、影响与下一步，`align` 中发现缺口直接继续讨论；不要求先有 BA 问卷或答复。完整流程默认分阶段使用会话，02–03 可连续问答，最终对齐仍保留一次阶段确认。进度与项目知识落入文件，换会话从卡目录续接。
 
 <多仓库项目：每个仓库使用同一套目录约定，内容各自项目化。通用流程同步，项目适配分别登记；规范各写各的，共享契约指定主维护位置。单仓库项目删掉本段。>
 
@@ -60,8 +60,8 @@
 |---|---|---|
 | 轻量维护 | `workflow/maintenance.md`、维护记录、`spec/index.md` 指向的相关章节 | 原卡的有效 AC / 契约及必要证据 |
 | 读卡 | `workflow/01-card-intake.md`、`spec/overview.md`、`spec/domain.md` | `decisions/rejected/`、`cards/archive/` 里的同主题卡 |
-| 拆问题 | `workflow/02-clarify.md`、`spec/legacy.md`、`context/upstream-downstream.md` | `spec/architecture.md` |
-| 对齐 | `workflow/03-align.md`、`workflow/02-clarify.md`（设计树追问与逐轮复核） | `decisions/adr/` |
+| 澄清 | `workflow/02-clarify.md`、`spec/legacy.md`、`context/upstream-downstream.md` | `spec/architecture.md` |
+| 对齐 | `workflow/03-align.md`、`workflow/02-clarify.md`（与 Dev 沿设计树讨论） | `decisions/adr/` |
 | 制定开发计划 | `workflow/04-dev-plan.md`、`spec/index.md` 指向的相关章节与通用约束 | 涉及契约 / 集成时读取 `context/api-contract.md` / `spec/integrations.md` 的相关章节 |
 | 开发（协调与评审） | `workflow/05-develop.md` | `spec/testing.md` |
 | 开发（执行子任务） | `workflow/05-execute-subtask.md`、子任务单及其“先读”列出的章节与契约 | 缺必要上下文时由协调者补单 |
@@ -74,7 +74,7 @@
 ## 按角色
 
 - **Dev**：全部。
-- **BA**：`spec/overview.md`、`spec/domain.md`、完整卡的 `02-questions.md` 与 `03-alignment.md`。轻量路径沿用明确预期，出现新的业务决定则升级。
+- **BA**：`spec/overview.md`、`spec/domain.md`、完整卡的 `02-questions.md` 中待业务判断的部分与 `03-alignment.md`。轻量路径沿用明确预期，出现新的业务决定则升级。
 - **QA**：完整卡的 `03-alignment.md` 与 `06-desk-check.md`；轻量维护中项目要求 QA 时，查看 `maintenance.md` 的验收依据与验证记录。
 
 ## 五条原则（借自 Trellis，适配本团队）

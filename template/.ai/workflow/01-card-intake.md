@@ -14,7 +14,7 @@
 1. **建卡目录。** 路径 `.ai/cards/<feat|fix>-<卡号>-<slug>/`，slug 为 3–5 个英文单词的 kebab-case。写 `README.md`（frontmatter 与当前恢复摘要见 `.ai/cards/README.md`），`workflow: full`、`stage: intake`；未形成的产物照实标“未产出”。
 2. **规范化卡内容。** 按 `.ai/templates/card-analysis.md` 第一部分填写：背景、用户故事（feat）或复现步骤 + 期望 + 实际（fix）、附件、优先级、BA 给的验收标准原文。保留 BA 原话，标注哪些是 AI 的推断。
 3. **核实卡里的说法。** 这是本阶段最有价值的一步，借自 triage 的"先核实再提问"：
-   - fix 卡：按复现步骤在代码里定位到具体类和方法，说明缺陷路径；能写出失败的测试或 curl 更好。找不到路径就写"未能定位，需要 BA 补充 X"。
+   - fix 卡：按复现步骤在代码里定位到具体类和方法，说明缺陷路径；能写出失败的测试或 curl 更好。找不到路径就记录检索范围与缺口，先由 AI / Dev 查证或补资料；业务触发条件确实不清时才提炼给 BA。
    - feat 卡：检查是否**已经实现**（按领域概念搜，不只按卡里的措辞搜），检查 `.ai/decisions/rejected/` 是否**曾被否决**，检查 `.ai/cards/archive/` 是否有同主题卡。
    - 核实结果写进 `01-card.md` 的"核实"段，每条结论带证据路径。
 4. **影响面初判。** 列出可能涉及的模块（用 `spec/architecture.md` 的模块名）、是否涉及对端仓库、是否涉及上下游系统（对照 `context/upstream-downstream.md`）、是否涉及表结构或配置键、是否涉及灰度 / 白名单逻辑。只是初判，允许后面推翻。
